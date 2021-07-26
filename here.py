@@ -41,7 +41,7 @@ def clean_general(df_t,column):
     listtoprocess=df_t[column].str.split(' ').tolist()
     for j in listtoprocess:
         j = [None if i=='null;' or i=='' else i for i in j]
-        j=j+[None]*(11-len(j))
+        j=j[:20]+[None]*(20-len(j[:20]))
         totallist.append(j)
     df=pd.DataFrame(totallist)
     df_t=pd.concat([df_t,hash_encode_column(df)], axis=1)
@@ -67,6 +67,8 @@ def clean_url(df_t):
 def count_url(df_t):
     df_t['URLs']=df_t.URLs.str.split(' ').str.len() 
     return df_t
+
+
     
 
 
