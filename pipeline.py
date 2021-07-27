@@ -17,7 +17,7 @@ def create_entitylist(df_t):
             newstring=j.split(":")[-1]
             newlist.append(newstring)
             newlist = [0 if i=='null' or i=='' else i for i in newlist]
-        newlist = newlist+ [0]*(42 - len(newlist))
+        newlist = newlist[:42]+ [0]*(42 - len(newlist[:42]))
         comblist.append(newlist[:-1])
     newdf=pd.DataFrame(comblist)
     df_t=df_t.drop('Entities',axis=1)
@@ -57,7 +57,6 @@ def clean_url(df_t):
         j = [None if i=='null;' or i=='' else i for i in j]
         j=j+[None]*(11-len(j))
         totallist.append(j)
-        print(totallist)
     df=pd.DataFrame(totallist)
     df_t=pd.concat([df_t,hash_encode_column(df)], axis=1)
 
@@ -69,7 +68,21 @@ def count_url(df_t):
     return df_t
 
 
-    
+columnlist=[]
+for i in range(512):
+    columnlist.append('usernamehash_col'+str(i))
+columnlist+=['Timestamp','#Followers','#Friends','Retweets',"#Favourites",'Mentions_count',"Hashtag_counts",'URL_counts']
+for i in range(41):
+    columnlist.append('Entities_embeddings'+str(i))
+for i in range(2):
+    columnlist.append('Sentiments'+str(i))
+for i in range(64):
+    columnlist.append('Mentionshash_col'+str(i))
+for i in range(64):
+    columnlist.append('Hashtagshash_col'+str(i))
+for i in range(64):
+    columnlist.append('URLshash_col'+str(i))
+
 
 
 df=pd.read_feather('clean.ftr')
