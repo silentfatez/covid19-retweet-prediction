@@ -24,6 +24,8 @@ Run the `run_experiments.ipynb` notebook in sequential order.
 
 ## Summary of Experiments
 
+The MSLE scores for comparison is obtained with the validation set.
+
 ### Experiment 1 - Varying Number of Estimators
 
 | Model Name   | No. of Estimators | MSLE               |
