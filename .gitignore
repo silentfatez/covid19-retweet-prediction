@@ -144,3 +144,4 @@ dataset
 legacy
 split
 models
+lstm/models_trained
