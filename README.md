@@ -18,6 +18,7 @@ The dataset used in this project is the [TweetsCOV19 Dataset](https://data.gesis
 
 ```utf-8
 .
+├── dataset/                          # pre-processed dataset
 ├── linear_neural_network/            # code for linear neural networks
 ├── lstm/                             # code for lstm models
 ├── xgboost/                          # code for xgboost algorithm
@@ -33,8 +34,27 @@ The dataset used in this project is the [TweetsCOV19 Dataset](https://data.gesis
 
 ## Model Development
 
-1. Download [pre-processed dataset](https://drive.google.com/file/d/1ZVpFhf0iZ_BfJWP4kVYgvLMPf_Yb039t/view?usp=sharing) and place it in the `dataset/` directory.
-2. Follow the instructions in the READMEs of the respective model directories (i.e. `linear_neural_network/`, `lstm/` and `xgboost/`) to run load, build and/or test the models.
+1. Download [pre-processed dataset](https://drive.google.com/file/d/1ZVpFhf0iZ_BfJWP4kVYgvLMPf_Yb039t/view?usp=sharing) and place it in the `./dataset/` directory.
+2. Navigate to the directory with the model of interest. E.g. if you want to check out the xgboost model, enter `cd xgboost` in the terminal.
+3. Create a virtual environment.
+
+    ```bash
+    virtualenv venv
+    ```
+
+4. Activate the virtual environment.
+
+    ```bash
+    source venv/bin/activate
+    ```
+
+5. Install required packages.
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+6. Follow the instructions in the READMEs of the respective model directories (i.e. `linear_neural_network/`, `lstm/` and `xgboost/`) to run load, build and/or test the models.
 
 ## Demonstration
 
