@@ -59,7 +59,8 @@ def train(train_set:list,
           booster:str="gbtree",
           load_checkpoints:str=None, 
           save_prefix:str=None, 
-          es_patience:int=10):
+          es_patience:int=10, 
+          main_proj_dir="."):
   """ Train model. 
   
   Args:
@@ -130,7 +131,7 @@ def train(train_set:list,
     # if no model is loaded, train model
     if not loaded:
       try:
-        model = _train_epoch(epoch_train_ls, model, params, num_boost_round, relevant_features)
+        model = _train_epoch(epoch_train_ls, model, params, num_boost_round, relevant_features, main_proj_dir=main_proj_dir)
         model.save_model(f"{save_prefix}{epoch_no}.model")
       except XGBoostError as xgb_err:
         # this error is thrown when num_boost_rounds set is more than the 
@@ -141,7 +142,7 @@ def train(train_set:list,
         return model, stats
     
     # validate model and append validation score to stats
-    overall_msle = _val_epoch(epoch_val_ls, model, relevant_features)
+    overall_msle = _val_epoch(epoch_val_ls, model, relevant_features, main_proj_dir=main_proj_dir)
     print(f"MSLE: {overall_msle}")
     stats.append(overall_msle)
     
@@ -172,10 +173,11 @@ def _train_epoch(train_file_ls:list,
                  model:xgb.Booster,
                  params:dict, 
                  num_boost_round:int, 
-                 relevant_features:list) -> xgb.Booster:
+                 relevant_features:list, 
+                 main_proj_dir:str=".") -> xgb.Booster:
   """ Train function at each epoch. """
   for train_file in tqdm(train_file_ls):
-    train_df = pd.read_feather(train_file)
+    train_df = pd.read_feather(f"{main_proj_dir}/{train_file}")
     x, y, feature_names = _extract_x_y_featurenames(train_df, 
                                                     relevant_features)
     dtrain = xgb.DMatrix(x, 
@@ -189,11 +191,12 @@ def _train_epoch(train_file_ls:list,
 
 def _val_epoch(val_file_ls:list, 
                model:xgb.Booster,
-               relevant_features:list) -> float:
+               relevant_features:list, 
+               main_proj_dir:str=".") -> float:
   """ Validate function at each epoch. """
   overall_msle = 0
   for val_file in tqdm(val_file_ls):
-    val_df = pd.read_feather(val_file)
+    val_df = pd.read_feather(f"{main_proj_dir}/{val_file}")
     x, y, feature_names = _extract_x_y_featurenames(val_df, 
                                                     relevant_features)
     y_pred = predict(model, x, feature_names)

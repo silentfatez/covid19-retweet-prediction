@@ -20,5 +20,4 @@ This directory contains code for the use of XGBoost algorithm to tackle the chal
 
 ## Instructions
 
-1. Write a short script to change the paths to the different files in the train/val/test sets to load the file from where the dataset is saved accordingly. In the code here, it is assumed that there is the dataset is contained in a `dataset/` directory in this directory.
-2. Run the `run_experiments.ipynb` notebook in sequential order.
+Run the `run_experiments.ipynb` notebook in sequential order.
