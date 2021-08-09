@@ -1,5 +1,7 @@
 # COVID-19 Retweet Prediction
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 During the Covid-19 Pandemic, we have seen the spread of fake news causing life-threatening situations. Case in point, due to the misinformation spread by the United State’s former President Trump on chloroquine, an Arizona man consumed the chemical believing it would cure Covid-19, and subsequently passed on. 
 
 To prevent these situations from happening in the future, screening of social media content for fake news so as to remove them before they spread is one of the ways which can be employed to tackle this issue. Due to limited time and resources, predicting the most viral content for screening would greatly aid in efforts to combat fake news. In the case of Twitter, virality can be measured by the number of retweets.
