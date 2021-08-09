@@ -1,8 +1,6 @@
 import pandas as pd
 import glob
 from tqdm import tqdm
-import torch
-from torch.utils.data import Dataset, DataLoader, random_split
 import numpy as np
 import json
 import random
@@ -10,10 +8,11 @@ import random
 RAND_SEED = 42
 
 np.random.seed(RAND_SEED)
-torch.manual_seed(RAND_SEED)
 random.seed(RAND_SEED)
 
-def _get_train_val_test_size(dataset_len, split):
+def _get_train_val_test_size(dataset_len:int, 
+                             split:tuple):
+  """ Get train-val-test split sizes in ints. """
   assert sum(split) == 1
 
   train_size = round(dataset_len * split[0])
@@ -30,7 +29,10 @@ def _get_all_files(dataset_dir):
 
   return ftr_files_ls
 
-def _get_row_ids(dataset_dir):
+def _get_row_ids(dataset_dir:str)->list:
+  """ Get all row ids, assuming that all files have 100 files, except for the 
+      last file which has less.
+  """
   ftr_files_ls = glob.glob(f"{dataset_dir}/data_*.ftr")
   print(f"no of .ftr files: {len(ftr_files_ls)}")
 
@@ -58,7 +60,9 @@ def _get_row_ids(dataset_dir):
 
   return all_rows
 
-def _random_sample(row_ids:list, sample:int=None):
+def _random_sample(row_ids:list, 
+                   sample:int=None):
+  """ Get a random sample of input list. """
   random.shuffle(row_ids)
   if sample:
     if sample >= len(row_ids):
@@ -66,7 +70,11 @@ def _random_sample(row_ids:list, sample:int=None):
     row_ids = row_ids[:sample]
   return row_ids
 
-def _train_val_test_split(row_ids, split:tuple=(0.8, 0.1, 0.1)):
+def _train_val_test_split(row_ids:list, 
+                          split:tuple=(0.8, 0.1, 0.1)):
+  """ Split contents of list into train-val-test sets according to split 
+      specified.
+  """
   random.shuffle(row_ids)
 
   train_size, val_size, test_size = _get_train_val_test_size(len(row_ids), split)
